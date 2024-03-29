@@ -29,7 +29,7 @@ function WeatherApp() {
 
     const getWeather = async () => {
         try {
-            return await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/getWeatherByCity?city=${location}`);
+            return await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/getWeather?location=${location}`);
         } catch (e) {
             throw e;
         }

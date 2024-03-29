@@ -13,34 +13,41 @@ import org.springframework.web.server.ResponseStatusException;
 @Slf4j
 public class OpenWeatherServiceImpl implements IOpenWeatherService {
 
-    private static final String url = "https://api.openweathermap.org/data/2.5/weather";
+    private static final String byCityUrl = "http://localhost:8081/api/v1/getWeatherByCity";
 
-    private static final String api_key = "1328a0774637ec53b00f218a93b8ebe0";
+    private static final String byZipUrl = "http://localhost:8082/api/v1/getWeatherByZip";
 
     private RestTemplate restTemplate;
 
     @Override
-    public String getWeatherByCity(String city) {
+    public String getWeather(String location) {
         try {
 
-            String fullUrl = String.format(url.concat("?q=%s").concat("&appid=%s"), city, api_key);
+            boolean byZip = false;
+            if (location.charAt(0) >= '0' && location.charAt(0) <= '9') {
+                byZip = true;
+            }
+
+            String fullUrl;
+            if (byZip) {
+                // call byZip server
+                fullUrl = String.format(byZipUrl.concat("?zip=%s"), location);
+            } else {
+                // call byCity server
+                fullUrl = String.format(byCityUrl.concat("?city=%s"), location);
+            }
 
             ResponseEntity<String> response = restTemplate.exchange(fullUrl, HttpMethod.GET, new HttpEntity<>(new HttpHeaders()), String.class);
 
             return response.getBody();
 
         } catch (Exception e) {
-            log.error("Some thing went wrong when fetching weather data by city", e);
+            log.error("Some thing went wrong when connecting GetWeather services", e);
             throw new ResponseStatusException(
                     HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Exception when calling OpenWeather API",
+                    "Exception when calling GetWeather services",
                     e
             );
         }
-    }
-
-    @Override
-    public String getWeatherByZipCode(String zipCode) {
-        return "a";
     }
 }

@@ -1,8 +1,6 @@
 package com.zhenyuan.OpenWeather.service;
 
-public interface IOpenWeatherService {
-
-    String getWeatherByCity(String city);
+public interface IGetWeatherByZipService {
 
     String getWeatherByZipCode(String zipCode);
 }

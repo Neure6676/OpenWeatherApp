@@ -5,6 +5,8 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/backend/OpenWeather/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/ByCity/pom.xml" />
+        <option value="$PROJECT_DIR$/backend/ByZip/pom.xml" />
       </list>
     </option>
   </component>

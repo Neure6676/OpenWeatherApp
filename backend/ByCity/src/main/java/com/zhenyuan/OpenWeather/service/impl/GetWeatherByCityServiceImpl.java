@@ -1,6 +1,6 @@
 package com.zhenyuan.OpenWeather.service.impl;
 
-import com.zhenyuan.OpenWeather.service.IOpenWeatherService;
+import com.zhenyuan.OpenWeather.service.IGetWeatherByCityService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class OpenWeatherServiceImpl implements IOpenWeatherService {
+public class GetWeatherByCityServiceImpl implements IGetWeatherByCityService {
 
     private static final String url = "https://api.openweathermap.org/data/2.5/weather";
 
@@ -39,23 +39,4 @@ public class OpenWeatherServiceImpl implements IOpenWeatherService {
         }
     }
 
-    @Override
-    public String getWeatherByZipCode(String zipCode) {
-        try {
-
-            String fullUrl = String.format(url.concat("?zip=%s").concat("&appid=%s"), zipCode, api_key);
-
-            ResponseEntity<String> response = restTemplate.exchange(fullUrl, HttpMethod.GET, new HttpEntity<>(new HttpHeaders()), String.class);
-
-            return response.getBody();
-
-        } catch (Exception e) {
-            log.error("Some thing went wrong when fetching weather data by zip code", e);
-            throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Exception when calling OpenWeather API",
-                    e
-            );
-        }
-    }
 }

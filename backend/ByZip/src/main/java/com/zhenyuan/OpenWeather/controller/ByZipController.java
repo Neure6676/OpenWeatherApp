@@ -1,6 +1,6 @@
 package com.zhenyuan.OpenWeather.controller;
 
-import com.zhenyuan.OpenWeather.service.IOpenWeatherService;
+import com.zhenyuan.OpenWeather.service.IGetWeatherByZipService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1")
-public class OpenWeatherController {
+public class ByZipController {
 
-    private IOpenWeatherService iOpenWeatherService;
+    private IGetWeatherByZipService iOpenWeatherService;
 
-    @GetMapping(value = "/getWeather")
-    public ResponseEntity<?> getWeather(@RequestParam String location) {
-        return ResponseEntity.ok(iOpenWeatherService.getWeather(location));
+    @GetMapping(value = "/getWeatherByZip")
+    public ResponseEntity<?> getWeatherByZipCode(@RequestParam String zip) {
+        return ResponseEntity.ok(iOpenWeatherService.getWeatherByZipCode(zip));
     }
 
 }
